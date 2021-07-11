@@ -18,162 +18,100 @@ let balut_points = document.querySelector("#balut_points");
 
 // --- EVENTLISTENERS ---
 
-for (let i = 0; balut.children[0].children.length > i; i++) {
-  balut.children[0].children[i].addEventListener("mouseenter", addHover);
-  balut.children[0].children[i].addEventListener("mouseleave", removeHover);
-  balut.children[0].children[i].addEventListener("click", addScore);
+function balutAddEventlisteners() {
+  for (let i = 0; balut.children[0].children.length > i; i++) {
+    balut.children[0].children[i].addEventListener("mouseenter", addHover);
+    balut.children[0].children[i].addEventListener("mouseleave", removeHover);
+    balut.children[0].children[i].addEventListener("click", addScore);
+  }
 }
 
-function balutFunc() {
-  return diceArray;
-}
+// TEMPORARY
+balutStyles("on")
+reset.style.display = "block";
+sum.style.display = "flex";
+sumHeld.style.display = "flex";
+rolls.style.display = "flex";
+// TEMPORARY
 
 function addHover() {
-  if (this.getAttribute("id") != "balut_top") {
-    if (this.children[1].style.color != "rgb(0, 0, 0)") {
-      if (this.getAttribute("id") == "balut_fours") {
-        this.children[1].innerHTML = balutFourFunc();
-      } else if (this.getAttribute("id") == "balut_fives") {
-        this.children[1].innerHTML = balutFiveFunc();
-      } else if (this.getAttribute("id") == "balut_sixes") {
-        this.children[1].innerHTML = balutSixFunc();
-      } else if (this.getAttribute("id") == "balut_straight") {
-        this.children[1].innerHTML = balutStraightFunc();
-      } else if (this.getAttribute("id") == "balut_full_house") {
-        this.children[1].innerHTML = balutFullHouseFunc();
-      } else if (this.getAttribute("id") == "balut_chance") {
-        this.children[1].innerHTML = balutChanceFunc();
-      } else if (this.getAttribute("id") == "balut_balut") {
-        this.children[1].innerHTML = balutBalutFunc();
-      }
-    } else if (this.children[2].style.color != "rgb(0, 0, 0)") {
-      if (this.getAttribute("id") == "balut_fours") {
-        this.children[2].innerHTML = balutFourFunc();
-      } else if (this.getAttribute("id") == "balut_fives") {
-        this.children[2].innerHTML = balutFiveFunc();
-      } else if (this.getAttribute("id") == "balut_sixes") {
-        this.children[2].innerHTML = balutSixFunc();
-      } else if (this.getAttribute("id") == "balut_straight") {
-        this.children[2].innerHTML = balutStraightFunc();
-      } else if (this.getAttribute("id") == "balut_full_house") {
-        this.children[2].innerHTML = balutFullHouseFunc();
-      } else if (this.getAttribute("id") == "balut_chance") {
-        this.children[2].innerHTML = balutChanceFunc();
-      } else if (this.getAttribute("id") == "balut_balut") {
-        this.children[2].innerHTML = balutBalutFunc();
-      }
-    } else if (this.children[3].style.color != "rgb(0, 0, 0)") {
-      if (this.getAttribute("id") == "balut_fours") {
-        this.children[3].innerHTML = balutFourFunc();
-      } else if (this.getAttribute("id") == "balut_fives") {
-        this.children[3].innerHTML = balutFiveFunc();
-      } else if (this.getAttribute("id") == "balut_sixes") {
-        this.children[3].innerHTML = balutSixFunc();
-      } else if (this.getAttribute("id") == "balut_straight") {
-        this.children[3].innerHTML = balutStraightFunc();
-      } else if (this.getAttribute("id") == "balut_full_house") {
-        this.children[3].innerHTML = balutFullHouseFunc();
-      } else if (this.getAttribute("id") == "balut_chance") {
-        this.children[3].innerHTML = balutChanceFunc();
-      } else if (this.getAttribute("id") == "balut_balut") {
-        this.children[3].innerHTML = balutBalutFunc();
-      }
-    } else if (this.children[4].style.color != "rgb(0, 0, 0)") {
-      if (this.getAttribute("id") == "balut_fours") {
-        this.children[4].innerHTML = balutFourFunc();
-      } else if (this.getAttribute("id") == "balut_fives") {
-        this.children[4].innerHTML = balutFiveFunc();
-      } else if (this.getAttribute("id") == "balut_sixes") {
-        this.children[4].innerHTML = balutSixFunc();
-      } else if (this.getAttribute("id") == "balut_straight") {
-        this.children[4].innerHTML = balutStraightFunc();
-      } else if (this.getAttribute("id") == "balut_full_house") {
-        this.children[4].innerHTML = balutFullHouseFunc();
-      } else if (this.getAttribute("id") == "balut_chance") {
-        this.children[4].innerHTML = balutChanceFunc();
-      } else if (this.getAttribute("id") == "balut_balut") {
-        this.children[4].innerHTML = balutBalutFunc();
-      }
-    } else {
+  let columnNum;
+  // get column number
+  for (let i = 0; i < 4; i++) {
+    if (this.children[i + 1].style.color != "rgb(0, 0, 0)") {
+      columnNum = i + 1;
+      break;
     }
+  }
+
+  const hoveredText = this.children[columnNum];
+
+  const balutColumnObj = {
+    "balut_fours": balutFourFunc(),
+    "balut_fives": balutFiveFunc(),
+    "balut_sixes": balutSixFunc(),
+    "balut_straight": balutStraightFunc(),
+    "balut_full_house": balutFullHouseFunc(),
+    "balut_chance": balutChanceFunc(),
+    "balut_balut": balutBalutFunc(),
+  }
+
+  // check hovered elements id and call respective function
+  if (columnNum !== undefined) {
+    hoveredText.innerHTML = balutColumnObj[this.getAttribute("id")];
   }
 }
 
 function removeHover() {
-  if (this.getAttribute("id") != "balut_top") {
-    if (this.children[1].style.color != "rgb(0, 0, 0)") {
-      this.children[1].innerHTML = "";
-    } else if (this.children[2].style.color != "rgb(0, 0, 0)") {
-      this.children[2].innerHTML = "";
-    } else if (this.children[3].style.color != "rgb(0, 0, 0)") {
-      this.children[3].innerHTML = "";
-    } else if (this.children[4].style.color != "rgb(0, 0, 0)") {
-      this.children[4].innerHTML = "";
+  for (let i = 0; i < 4; i++) {
+    if (this.children[i + 1].style.color != "rgb(0, 0, 0)") {
+      this.children[i + 1].innerHTML = "";
+      break;
     }
   }
 }
 
 function addScore() {
-  if (this.getAttribute("id") != "balut_top") {
-    if (
-      this.children[1].innerHTML != "" &&
-      this.children[1].style.color != "rgb(0, 0, 0)"
-    ) {
-      this.children[1].style.color = "rgb(0, 0, 0)";
-    } else if (
-      this.children[2].innerHTML != "" &&
-      this.children[2].style.color != "rgb(0, 0, 0)"
-    ) {
-      this.children[2].style.color = "rgb(0, 0, 0)";
-    } else if (
-      this.children[3].innerHTML != "" &&
-      this.children[3].style.color != "rgb(0, 0, 0)"
-    ) {
-      this.children[3].style.color = "rgb(0, 0, 0)";
-    } else if (
-      this.children[4].innerHTML != "" &&
-      this.children[4].style.color != "rgb(0, 0, 0)"
-    ) {
-      this.children[4].style.color = "rgb(0, 0, 0)";
-      // Add all fours together and add to score-cell
-      let sum =
-        (isNaN(Number(this.children[1].innerHTML))
-          ? 0
-          : Number(this.children[1].innerHTML)) +
-        (isNaN(Number(this.children[2].innerHTML))
-          ? 0
-          : Number(this.children[2].innerHTML)) +
-        (isNaN(Number(this.children[3].innerHTML))
-          ? 0
-          : Number(this.children[3].innerHTML)) +
-        (isNaN(Number(this.children[4].innerHTML))
-          ? 0
-          : Number(this.children[4].innerHTML));
-      this.children[5].innerHTML = sum;
-      let points = givePoints(this);
-      this.children[6].innerHTML = points;
-      scoreArray.push(sum);
-      pointArray.push(points);
-      if (scoreArray.length == 7) {
-        balut_score.children[2].innerHTML = scoreArray.reduce(
-          (a, b) => a + b,
-          0
-        );
-        balut_score.children[3].innerHTML = scoreToPoints(
-          scoreArray.reduce((a, b) => a + b, 0)
-        );
-        balut_points.children[2].innerHTML =
-          pointArray.reduce((a, b) => a + b, 0) +
-          scoreToPoints(scoreArray.reduce((a, b) => a + b, 0));
-      }
+
+  for (let i = 0; i < 4; i++) {
+    if (this.children[i + 1].style.color != "rgb(0, 0, 0)") {
+      this.children[i + 1].style.color = "rgb(0, 0, 0)";
+      break;
+    }
+  }
+
+  if (this.children[4].innerHTML != "") {
+    // Add all fours together and add to score-cell
+    let sum = (isNaN(Number(this.children[1].innerHTML)) ? 0 : Number(this.children[1].innerHTML)) + (isNaN(Number(this.children[2].innerHTML)) ? 0 : Number(this.children[2].innerHTML)) + (isNaN(Number(this.children[3].innerHTML)) ? 0 : Number(this.children[3].innerHTML)) + (isNaN(Number(this.children[4].innerHTML)) ? 0 : Number(this.children[4].innerHTML));
+    this.children[5].innerHTML = sum;
+    let points = givePoints(this);
+    this.children[6].innerHTML = points;
+    scoreArray.push(sum);
+    pointArray.push(points);
+    if (scoreArray.length == 7) {
+      balut_score.children[2].innerHTML = scoreArray.reduce(
+        (a, b) => a + b,
+        0
+      );
+      balut_score.children[3].innerHTML = scoreToPoints(
+        scoreArray.reduce((a, b) => a + b, 0)
+      );
+      balut_points.children[2].innerHTML =
+        pointArray.reduce((a, b) => a + b, 0) +
+        scoreToPoints(scoreArray.reduce((a, b) => a + b, 0));
     }
   }
 
   // Reset dice colors and counter
-  for (let i = 0; i < diceContainer.children.length; i++) {
-    diceContainer.children[i].children[0].style.backgroundColor =
-      "rgb(255, 255, 255)";
+  resetFunc()
+
+  // Remove eventlisteners
+  for (let i = 0; balut.children[0].children.length > i; i++) {
+    balut.children[0].children[i].removeEventListener("mouseenter", addHover);
+    balut.children[0].children[i].removeEventListener("mouseleave", removeHover);
+    balut.children[0].children[i].removeEventListener("click", addScore);
   }
+
   rolls.children[0].children[0].innerHTML = 0;
 }
 

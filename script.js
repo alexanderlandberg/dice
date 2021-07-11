@@ -2,10 +2,10 @@
 
 // --- VARIABLES START ---
 
-// Color on kept dice
 let holdColor = "rgb(232, 232, 232)";
 let diceArray = [];
 let heldDiceArray = {};
+let balutEnabled = false;
 
 // Selectors
 let add = document.querySelector("#add_dice p");
@@ -52,48 +52,55 @@ function removeDiceFunc() {
 
 // --- Roll dice
 function rollDice() {
-
-  // Empty dice array
-  diceArray = [];
-
-  // Roll counter
-  rolls.children[0].children[0].innerHTML = Number(rolls.children[0].children[0].innerHTML) + 1;
-
-  // Disable eventlistener
-  roll.removeEventListener("click", rollDice);
-
-  // Check dice amount, check if they are selected and 
-  for (let i = 0; diceContainer.children.length > i; i++) {
-    if (diceContainer.children[i].children[0].style.backgroundColor != holdColor) {
-      // Call shuffle function
-      let refreshIntervalId = setInterval(mix, 10);
-
-      setTimeout(function () {
-        // Stop shuffle and 
-        clearInterval(refreshIntervalId);
-
-        // Add eyes to dice
-        diceContainer.children[i].children[0].children[0].innerHTML = Math.ceil(Math.random() * 6);
-
-
-
-      }, 500);
+  if (balutEnabled === true && rolls.children[0].children[0].innerHTML > 2) {
+  } else {
+    if (balutEnabled === true) {
+      // balut code here
+      balutAddEventlisteners();
     }
-    // Add dice to array
+
+    // Empty dice array
+    diceArray = [];
+
+    // Roll counter
+    rolls.children[0].children[0].innerHTML = Number(rolls.children[0].children[0].innerHTML) + 1;
+
+    // Disable eventlistener
+    roll.removeEventListener("click", rollDice);
+
+    // Check dice amount, check if they are selected and 
+    for (let i = 0; diceContainer.children.length > i; i++) {
+      if (diceContainer.children[i].children[0].style.backgroundColor != holdColor) {
+        // Call shuffle function
+        let refreshIntervalId = setInterval(mix, 10);
+
+        setTimeout(function () {
+          // Stop shuffle and 
+          clearInterval(refreshIntervalId);
+
+          // Add eyes to dice
+          diceContainer.children[i].children[0].children[0].innerHTML = Math.ceil(Math.random() * 6);
+
+
+
+        }, 500);
+      }
+      // Add dice to array
+      setTimeout(function () {
+        diceArray.push(
+          Number(diceContainer.children[i].children[0].children[0].innerHTML)
+        )
+      }, 550);
+    }
+
+
+
+    // Reable eventlistener + call summation function
     setTimeout(function () {
-      diceArray.push(
-        Number(diceContainer.children[i].children[0].children[0].innerHTML)
-      )
-    }, 550);
+      roll.addEventListener("click", rollDice);
+      sum.children[0].children[0].innerHTML = summationFunc();
+    }, 500);
   }
-
-
-
-  // Reable eventlistener + call summation function
-  setTimeout(function () {
-    roll.addEventListener("click", rollDice);
-    sum.children[0].children[0].innerHTML = summationFunc();
-  }, 500);
 }
 
 // - Shuffle dice
@@ -166,7 +173,7 @@ function buttonSlide(parm) {
 // - Hold on dice
 function holdDice(parm) {
   if (parm.style.backgroundColor == holdColor) {
-    parm.style.backgroundColor = "#ffffff";
+    parm.style.backgroundColor = "";
   } else {
     parm.style.backgroundColor = holdColor;
   }
@@ -176,12 +183,13 @@ function holdDice(parm) {
 // - Reset dice and counters
 function resetFunc() {
   for (let i = 0; diceContainer.children.length > i; i++) {
-    diceContainer.children[i].children[0].style.backgroundColor = "#ffffff";
+    diceContainer.children[i].children[0].style.backgroundColor = "";
     diceContainer.children[i].children[0].children[0].innerHTML = 1;
   }
   sum.children[0].children[0].innerHTML = 0;
   sumHeld.children[0].children[0].innerHTML = 0;
   rolls.children[0].children[0].innerHTML = 0;
+  diceArray = [];
 }
 
 // - Return sum of all dice
@@ -210,8 +218,6 @@ function summationHeldFunc() {
 
 // - Balut styles 
 function balutStyles(parm) {
-  console.log(parm)
-
   if (parm == "on") {
 
     // Display 5 dice
@@ -224,12 +230,17 @@ function balutStyles(parm) {
       }
     }, 10);
 
+    // Reset numbers
+    resetFunc()
+
     // Add balut css
     document.querySelector("body").classList.add("balut_style");
+    balutEnabled = true;
 
   } else {
     // Remove balut css
     document.querySelector("body").classList.remove("balut_style");
+    balutEnabled = false;
 
   }
 

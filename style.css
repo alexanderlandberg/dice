@@ -255,3 +255,13 @@
  .balut_style #balut_scoreboard {
      display: table;
  }
+
+ .balut_style #reset {
+     display: block !important;
+ }
+
+ .balut_style #sum,
+ .balut_style #sum_held,
+ .balut_style #rolls {
+     display: flex !important;
+ }
