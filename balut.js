@@ -26,22 +26,6 @@ function balutAddEventlisteners() {
   }
 }
 
-// -------------------------------------------
-// ---------------- TEMPORARY ---------------- 
-// -------------------------------------------
-
-// balutStyles("on")
-// reset.style.display = "block";
-// sum.style.display = "flex";
-// sumHeld.style.display = "flex";
-// rolls.style.display = "flex";
-// setTimeout(() => {
-//   rollDice()
-// }, 100);
-
-// -------------------------------------------
-// ---------------- TEMPORARY ---------------- 
-// -------------------------------------------
 
 function addHover() {
   let columnNum;
