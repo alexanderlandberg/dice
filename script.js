@@ -145,7 +145,6 @@ function buttonSlide(parm) {
       rolls.style.display = "none";
     }
     if (parm.getAttribute("data-button") == "balut") {
-      balut.style.display = "none";
       balutStyles("off")
     }
   } else {
@@ -164,7 +163,6 @@ function buttonSlide(parm) {
       rolls.style.display = "flex";
     }
     if (parm.getAttribute("data-button") == "balut") {
-      balut.style.display = "table";
       balutStyles("on")
     }
   }

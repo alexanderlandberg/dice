@@ -197,7 +197,7 @@ li {
 }
 
 #balut,
-#balut_scoreboard {
+#balut_scoreboard, #balut_header {
   display: none;
 }
 
@@ -240,10 +240,11 @@ th {
 }
 
 .balut_style #dice_container .cell .dice p {
-  margin: 22px 0px;
+  line-height: 80px;
 }
 
 .balut_style #balut,
+.balut_style #balut_header,
 .balut_style #balut_scoreboard {
   display: table;
 }

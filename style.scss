@@ -175,7 +175,7 @@ li {
 }
 
 #balut,
-#balut_scoreboard {
+#balut_scoreboard, #balut_header {
     display: none;
 }
 
@@ -217,12 +217,13 @@ th {
                 left: 3px;
                 top: 10px;
                 p {
-                    margin: 22px 0px;
+                    line-height: 80px;
                 }
             }
         }
     }
     #balut,
+    #balut_header,
     #balut_scoreboard {
         display: table;
     }
