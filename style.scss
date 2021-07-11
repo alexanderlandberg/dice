@@ -192,17 +192,14 @@ th {
 }
 
 #balut {
+    user-select: none;
     tr {
+        cursor: pointer;
         td {
-            &:nth-child(2),
-            &:nth-child(3),
-            &:nth-child(4),
-            &:nth-child(5),
-            &:nth-child(6),
-            &:nth-child(7){
-                cursor: pointer;
-                color: #b1b1b1;
-            } 
+            color: #b1b1b1;
+            &:first-child, &[done]{
+                color: #000000;
+            }
         }
     }
 }

@@ -26,22 +26,28 @@ function balutAddEventlisteners() {
   }
 }
 
-// TEMPORARY
-balutStyles("on")
-reset.style.display = "block";
-sum.style.display = "flex";
-sumHeld.style.display = "flex";
-rolls.style.display = "flex";
-setTimeout(() => {
-  rollDice()
-}, 100);
-// TEMPORARY
+// -------------------------------------------
+// ---------------- TEMPORARY ---------------- 
+// -------------------------------------------
+
+// balutStyles("on")
+// reset.style.display = "block";
+// sum.style.display = "flex";
+// sumHeld.style.display = "flex";
+// rolls.style.display = "flex";
+// setTimeout(() => {
+//   rollDice()
+// }, 100);
+
+// -------------------------------------------
+// ---------------- TEMPORARY ---------------- 
+// -------------------------------------------
 
 function addHover() {
   let columnNum;
   // get column number
   for (let i = 0; i < 4; i++) {
-    if (this.children[i + 1].style.color != "rgb(0, 0, 0)") {
+    if (this.children[i + 1].getAttribute("done") === null) {
       columnNum = i + 1;
       break;
     }
@@ -63,7 +69,7 @@ function addHover() {
   if (columnNum !== undefined) {
     hoveredText.innerHTML = balutColumnObj[this.getAttribute("id")];
   }
-  if (this.children[4].innerHTML != "" && this.children[4].style.color != "rgb(0, 0, 0)") {
+  if (this.children[4].innerHTML != "" && this.children[4].getAttribute("done") === null) {
     // console.log("LAST ONE")
     let sum = (isNaN(Number(this.children[1].innerHTML)) ? 0 : Number(this.children[1].innerHTML)) + (isNaN(Number(this.children[2].innerHTML)) ? 0 : Number(this.children[2].innerHTML)) + (isNaN(Number(this.children[3].innerHTML)) ? 0 : Number(this.children[3].innerHTML)) + (isNaN(Number(this.children[4].innerHTML)) ? 0 : Number(this.children[4].innerHTML));
     this.children[5].innerHTML = sum;
@@ -76,12 +82,12 @@ function addHover() {
 
 function removeHover() {
   for (let i = 0; i < 4; i++) {
-    if (this.children[i + 1].style.color != "rgb(0, 0, 0)") {
+    if (this.children[i + 1].getAttribute("done") === null) {
       this.children[i + 1].innerHTML = "";
       break;
     }
   }
-  if (this.children[4].style.color != "rgb(0, 0, 0)") {
+  if (this.children[4].getAttribute("done") === null) {
     this.children[5].innerHTML = "";
     this.children[6].innerHTML = "";
   }
@@ -89,9 +95,15 @@ function removeHover() {
 
 function addScore() {
 
+  if (this.children[6].getAttribute("done") !== null) {
+    return;
+  }
+
+  console.log("ADD", this)
+
   for (let i = 0; i < 4; i++) {
-    if (this.children[i + 1].style.color != "rgb(0, 0, 0)") {
-      this.children[i + 1].style.color = "rgb(0, 0, 0)";
+    if (this.children[i + 1].getAttribute("done") === null) {
+      this.children[i + 1].setAttribute("done", "");
       break;
     }
   }
@@ -100,10 +112,10 @@ function addScore() {
     // Add all fours together and add to score-cell
     let sum = (isNaN(Number(this.children[1].innerHTML)) ? 0 : Number(this.children[1].innerHTML)) + (isNaN(Number(this.children[2].innerHTML)) ? 0 : Number(this.children[2].innerHTML)) + (isNaN(Number(this.children[3].innerHTML)) ? 0 : Number(this.children[3].innerHTML)) + (isNaN(Number(this.children[4].innerHTML)) ? 0 : Number(this.children[4].innerHTML));
     this.children[5].innerHTML = sum;
-    this.children[5].style.color = "rgb(0, 0, 0)";
+    this.children[5].setAttribute("done", "");
     let points = givePoints(this);
     this.children[6].innerHTML = points;
-    this.children[6].style.color = "rgb(0, 0, 0)";
+    this.children[6].setAttribute("done", "");
     scoreArray.push(sum);
     pointArray.push(points);
     if (scoreArray.length == 7) {
