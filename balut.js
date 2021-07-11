@@ -26,6 +26,17 @@ function balutAddEventlisteners() {
   }
 }
 
+// TEMPORARY
+balutStyles("on")
+reset.style.display = "block";
+sum.style.display = "flex";
+sumHeld.style.display = "flex";
+rolls.style.display = "flex";
+setTimeout(() => {
+  rollDice()
+}, 100);
+// TEMPORARY
+
 function addHover() {
   let columnNum;
   // get column number
@@ -52,6 +63,15 @@ function addHover() {
   if (columnNum !== undefined) {
     hoveredText.innerHTML = balutColumnObj[this.getAttribute("id")];
   }
+  if (this.children[4].innerHTML != "" && this.children[4].style.color != "rgb(0, 0, 0)") {
+    // console.log("LAST ONE")
+    let sum = (isNaN(Number(this.children[1].innerHTML)) ? 0 : Number(this.children[1].innerHTML)) + (isNaN(Number(this.children[2].innerHTML)) ? 0 : Number(this.children[2].innerHTML)) + (isNaN(Number(this.children[3].innerHTML)) ? 0 : Number(this.children[3].innerHTML)) + (isNaN(Number(this.children[4].innerHTML)) ? 0 : Number(this.children[4].innerHTML));
+    this.children[5].innerHTML = sum;
+    this.children[5].style.color = "";
+    let points = givePoints(this);
+    this.children[6].innerHTML = points;
+    this.children[6].style.color = "";
+  }
 }
 
 function removeHover() {
@@ -60,6 +80,10 @@ function removeHover() {
       this.children[i + 1].innerHTML = "";
       break;
     }
+  }
+  if (this.children[4].style.color != "rgb(0, 0, 0)") {
+    this.children[5].innerHTML = "";
+    this.children[6].innerHTML = "";
   }
 }
 
@@ -76,8 +100,10 @@ function addScore() {
     // Add all fours together and add to score-cell
     let sum = (isNaN(Number(this.children[1].innerHTML)) ? 0 : Number(this.children[1].innerHTML)) + (isNaN(Number(this.children[2].innerHTML)) ? 0 : Number(this.children[2].innerHTML)) + (isNaN(Number(this.children[3].innerHTML)) ? 0 : Number(this.children[3].innerHTML)) + (isNaN(Number(this.children[4].innerHTML)) ? 0 : Number(this.children[4].innerHTML));
     this.children[5].innerHTML = sum;
+    this.children[5].style.color = "rgb(0, 0, 0)";
     let points = givePoints(this);
     this.children[6].innerHTML = points;
+    this.children[6].style.color = "rgb(0, 0, 0)";
     scoreArray.push(sum);
     pointArray.push(points);
     if (scoreArray.length == 7) {
@@ -134,7 +160,6 @@ function scoreToPoints(parm) {
 // Give Points when row is full
 function givePoints(parm) {
   if (parm.getAttribute("id") == "balut_fours") {
-    console.log(Number(parm.children[5].innerHTML));
     if (Number(parm.children[5].innerHTML) > 51) {
       return 2;
     } else {
@@ -183,10 +208,7 @@ function givePoints(parm) {
   } else if (parm.getAttribute("id") == "balut_balut") {
     let balutPoints = 0;
     for (let i = 1; i < 5; i++) {
-      if (isNaN(Number(parm.children[i].innerHTML))) {
-        console.log("t");
-      } else {
-        console.log("tt");
+      if (!isNaN(Number(parm.children[i].innerHTML))) {
         balutPoints += 2;
       }
     }
